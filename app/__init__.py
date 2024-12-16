@@ -8,6 +8,7 @@ import os  # 환경 변수 사용을 위한 모듈
 # Extensions 초기화
 db = SQLAlchemy()
 migrate = Migrate()
+
 api = Api(version='1.0', title='Member Management API', description='API for managing members')
 
 def create_app():
@@ -35,3 +36,7 @@ def create_app():
     api.add_namespace(api_ns, path='/api/members')
 
     return app
+
+if __name__ == '__main__':
+    app = create_app()
+    app.run(debug=True)

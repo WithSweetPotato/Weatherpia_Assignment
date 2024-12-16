@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request
 from flask_restx import Namespace, Resource, fields
 from app.models import db, Member
 
@@ -20,15 +20,21 @@ class MemberList(Resource):
     def get(self):
         """모든 회원 조회"""
         members = Member.query.all()
-        return jsonify([member.to_dict() for member in members])
+        return {"data": [member.to_dict() for member in members], "message": "success"}, 200
 
     @api_ns.expect(member_model)
     @api_ns.doc('create_member')
     def post(self):
         """회원 추가"""
-        data = request.json
+        data = request.get_json()
+        if not data:
+            return {"message": "잘못된 데이터 형식입니다. JSON 형식이어야 합니다."}, 400
+
+        if not data.get('user_id') or not data.get('email'):
+            return {"message": "user_id와 email은 필수 항목입니다."}, 400
+
         if Member.query.filter_by(user_id=data['user_id']).first():
-            return {"message": "이미 존재하는 회원 ID입니다."}, 400
+            return {"message": f"이미 존재하는 회원 ID입니다: {data['user_id']}"}, 400
 
         new_member = Member(
             user_id=data['user_id'],
@@ -48,13 +54,16 @@ class Member(Resource):
     def get(self, id):
         """특정 회원 조회"""
         member = Member.query.get_or_404(id)
-        return jsonify(member.to_dict())
+        return {"data": member.to_dict(), "message": "success"}, 200
 
     @api_ns.expect(member_model)
     @api_ns.doc('update_member')
     def put(self, id):
         """회원 정보 수정"""
-        data = request.json
+        data = request.get_json()
+        if not data:
+            return {"message": "잘못된 데이터 형식입니다. JSON 형식이어야 합니다."}, 400
+
         member = Member.query.get_or_404(id)
 
         member.user_id = data['user_id']
@@ -65,7 +74,7 @@ class Member(Resource):
         member.grade = data['grade']
 
         db.session.commit()
-        return {"message": "회원 정보가 성공적으로 수정되었습니다."}
+        return {"message": "회원 정보가 성공적으로 수정되었습니다."}, 200
 
     @api_ns.doc('delete_member')
     def delete(self, id):
@@ -73,4 +82,4 @@ class Member(Resource):
         member = Member.query.get_or_404(id)
         db.session.delete(member)
         db.session.commit()
-        return {"message": "회원이 성공적으로 삭제되었습니다."}
+        return {"message": f"회원(ID: {id})이 성공적으로 삭제되었습니다."}, 200
