@@ -16,10 +16,13 @@ def create_db_connection():
     """MySQL 데이터베이스 연결 생성"""
     try:
         connection = mysql.connector.connect(
-            host=os.getenv('DB_HOST'),          # .env에서 로드
-            user=os.getenv('DB_USER'),          # .env에서 로드
-            password=os.getenv('DB_PASSWORD'),  # .env에서 로드
-            database=os.getenv('DB_NAME')       # .env에서 로드
+            host=os.getenv('DB_HOST', '127.0.0.1'),
+            user=os.getenv('DB_USER', 'root'),
+            password=os.getenv('DB_PASSWORD', '0408'),
+            database=os.getenv('DB_NAME', 'member_db'),
+            port=3306,
+            charset='utf8mb4',  # Character set 설정
+            collation='utf8mb4_general_ci'  # Collation 명시
         )
         print("Database connection successful")
         return connection
@@ -45,9 +48,13 @@ def create_app():
     if not app.db_connection.is_connected():
         raise RuntimeError("Database is not connected. Please check your settings.")
 
-    # Register routes (API 엔드포인트 등록)
+    # Register API routes (REST API 엔드포인트 등록)
     from app.routes import api_ns
     api.add_namespace(api_ns, path='/api/members')
+
+    # Register web routes (HTML 페이지 라우트 등록)
+    from app.web_routes import web_bp
+    app.register_blueprint(web_bp)
 
     return app
 
