@@ -1,0 +1,80 @@
+<!-- templates/list.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>회원 목록</title>
+  <style>
+    table {
+      width: 700px;
+      border-collapse: collapse;
+      margin: 20px auto;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    .container {
+      text-align: center;
+    }
+    .btn {
+      padding: 5px 10px;
+      margin: 2px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center;">회원 목록</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>회원번호</th>
+        <th>ID</th>
+        <th>Password</th>
+        <th>Name</th>
+        <th>Nickname</th>
+        <th>Email</th>
+        <th>Grade</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for member in members %}
+      <tr>
+        <td>{{ member.member_no }}</td>
+        <td>{{ member.user_id }}</td>
+        <td>{{ member.password }}</td>
+        <td>{{ member.name }}</td>
+        <td>{{ member.nickname }}</td>
+        <td>{{ member.email }}</td>
+        <td>{{ member.grade }}</td>
+        <td>
+          <button class="btn" onclick="location.href='/update/{{ member.member_no }}'">수정</button>
+          <button class="btn" onclick="confirmDelete('{{ member.member_no }}', '{{ member.user_id }}')">삭제</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="container">
+    <button class="btn" onclick="location.href='/'">회원 등록 페이지로 이동</button>
+  </div>
+
+  <script>
+    function confirmDelete(memberNo, userId) {
+      if(confirm(userId + " 회원을 삭제하시겠습니까?")) {
+        // POST 방식으로 삭제
+        const form = document.createElement('form');
+        form.method = "POST";
+        form.action = "/delete/" + memberNo;
+        document.body.appendChild(form);
+        form.submit();
+      }
+    }
+  </script>
+</body>
+</html>

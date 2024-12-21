@@ -1,0 +1,53 @@
+<!-- templates/update.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>회원 수정</title>
+  <style>
+    .container {
+      width: 300px;
+      margin: 50px auto;
+    }
+    label {
+      display: block;
+      margin: 8px 0 4px;
+    }
+    input {
+      width: 100%;
+      padding: 5px;
+    }
+    button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>회원 수정</h1>
+    <form method="POST">
+      <label for="user_id">ID</label>
+      <input type="text" id="user_id" name="user_id" value="{{ user.user_id }}" required>
+
+      <label for="password">Password</label>
+      <input type="text" id="password" name="password" value="{{ user.password }}" required>
+
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" value="{{ user.name }}" required>
+
+      <label for="nickname">Nickname</label>
+      <input type="text" id="nickname" name="nickname" value="{{ user.nickname }}" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+      <label for="grade">Grade</label>
+      <input type="text" id="grade" name="grade" value="{{ user.grade }}" required>
+
+      <button type="submit">수정 완료</button>
+    </form>
+  </div>
+</body>
+</html>
