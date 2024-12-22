@@ -17,7 +17,7 @@
 
 ---
 
-## 폴더 구조 (KR) / Folder Structure (EN)
+## 폴더 구조
 
 1. **app.py**  
    - Flask 메인 파일: DB 연결, HTML 라우트(`/`, `/members`, `/update/<id>`, etc.),  
@@ -33,7 +33,7 @@
 
 ---
 
-## 주요 기능 (KR/EN)
+## 주요 기능
 
 1. **회원 등록 (Create)**
    - **HTML**: `GET /` → Form → `POST /`  
@@ -57,7 +57,7 @@
 
 ---
 
-## 설치 & 실행 (KR/EN)
+## 설치 & 실행
 
 1. **DB 준비**: `members_db` 생성, `members` 테이블
 2. **가상환경(옵션)**: `python -m venv venv && .\venv\Scripts\activate.ps1`
@@ -71,17 +71,12 @@
 
 ---
 
-## 주의 사항 / Notes
-- 실제 운영 시 **비밀번호 해시** 필수 (현재 평문 저장)
+## 주의 사항
 - 정렬/페이지 파라미터는 기본 수준의 화이트리스트 처리
 - 예외 처리는 최소화
-- 배포 시 Gunicorn + Nginx 혹은 Docker 등 고려
+- 배포 시 Docker 등 고려
 
 ---
 
-## License
-MIT License
-
-이 프로젝트는 학습/과제용 예시입니다.
-(Feel free to modify or distribute for educational purposes.)
+이 프로젝트는 상업용 배포가 아닌, 과제용 소스코드로 작성되었습니다.
 
