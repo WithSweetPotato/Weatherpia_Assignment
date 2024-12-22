@@ -15,8 +15,9 @@
       padding: 8px;
       text-align: center;
     }
-    .container {
+    .pagination, .sort-buttons {
       text-align: center;
+      margin: 20px;
     }
     .btn {
       padding: 5px 10px;
@@ -28,10 +29,19 @@
 <body>
   <h1 style="text-align:center;">회원 목록</h1>
 
+  <!-- 정렬 버튼 섹션 -->
+  <div class="sort-buttons">
+    <!-- 각 버튼 클릭 시, 쿼리 파라미터 sort / order 를 바꿔서 이동 -->
+    <button class="btn" onclick="location.href='?sort=name&order=asc'">이름 오름차순</button>
+    <button class="btn" onclick="location.href='?sort=name&order=desc'">이름 내림차순</button>
+    <button class="btn" onclick="location.href='?sort=grade&order=asc'">등급 낮은 순</button>
+    <button class="btn" onclick="location.href='?sort=grade&order=desc'">등급 높은 순</button>
+  </div>
+
   <table>
     <thead>
       <tr>
-        <th>회원번호</th>
+        <th>No</th>
         <th>ID</th>
         <th>Password</th>
         <th>Name</th>
@@ -53,28 +63,55 @@
         <td>{{ member.grade }}</td>
         <td>
           <button class="btn" onclick="location.href='/update/{{ member.member_no }}'">수정</button>
-          <button class="btn" onclick="confirmDelete('{{ member.member_no }}', '{{ member.user_id }}')">삭제</button>
+          <button class="btn" onclick="confirmDelete('{{ member.member_no }}','{{ member.user_id }}')">삭제</button>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 
-  <div class="container">
-    <button class="btn" onclick="location.href='/'">회원 등록 페이지로 이동</button>
+  <!-- 페이지네이션 -->
+  <div class="pagination">
+    <!-- 처음 페이지로 이동 -->
+    <a href="?page=1&sort={{sort}}&order={{order}}">[처음]</a>
+
+    <!-- 이전 페이지 -->
+    {% if page > 1 %}
+      <a href="?page={{ page-1 }}&sort={{sort}}&order={{order}}">[이전]</a>
+    {% endif %}
+    
+    <!-- 페이지 번호 목록 -->
+    {% for p in range(1, total_pages+1) %}
+      {% if p == page %}
+        <strong>[{{p}}]</strong>
+      {% else %}
+        <a href="?page={{p}}&sort={{sort}}&order={{order}}">[{{p}}]</a>
+      {% endif %}
+    {% endfor %}
+
+    <!-- 다음 페이지 -->
+    {% if page < total_pages %}
+      <a href="?page={{ page+1 }}&sort={{sort}}&order={{order}}">[다음]</a>
+    {% endif %}
+
+    <!-- 마지막 페이지로 이동 -->
+    <a href="?page={{total_pages}}&sort={{sort}}&order={{order}}">[마지막]</a>
+  </div>
+
+  <div style="text-align: center;">
+    <button class="btn" onclick="location.href='/'">회원 등록</button>
   </div>
 
   <script>
-    function confirmDelete(memberNo, userId) {
-      if(confirm(userId + " 회원을 삭제하시겠습니까?")) {
-        // POST 방식으로 삭제
-        const form = document.createElement('form');
-        form.method = "POST";
-        form.action = "/delete/" + memberNo;
-        document.body.appendChild(form);
-        form.submit();
-      }
+  function confirmDelete(memberNo, userId) {
+    if (confirm(userId + " 회원을 삭제하시겠습니까?")) {
+      var form = document.createElement('form');
+      form.method = "POST";
+      form.action = "/delete/" + memberNo;
+      document.body.appendChild(form);
+      form.submit();
     }
+  }
   </script>
 </body>
 </html>

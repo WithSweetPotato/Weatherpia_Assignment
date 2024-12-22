@@ -1,8 +1,8 @@
 <!-- templates/main.html -->
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <title>회원 등록</title>
   <style>
     .container {
@@ -29,22 +29,22 @@
     <h1>회원 등록</h1>
     <form method="POST">
       <label for="user_id">ID</label>
-      <input type="text" id="user_id" name="user_id" required>
+      <input type="text" id="user_id" name="user_id" required />
 
       <label for="password">Password</label>
-      <input type="password" id="password" name="password" required>
+      <input type="password" id="password" name="password" required />
 
       <label for="name">Name</label>
-      <input type="text" id="name" name="name" required>
+      <input type="text" id="name" name="name" required />
 
       <label for="nickname">Nickname</label>
-      <input type="text" id="nickname" name="nickname" required>
+      <input type="text" id="nickname" name="nickname" required />
 
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
+      <input type="email" id="email" name="email" required />
 
       <label for="grade">Grade</label>
-      <input type="text" id="grade" name="grade" placeholder="silver, gold 등등..." required>
+      <input type="text" id="grade" name="grade" placeholder="BRONZE, SILVER, GOLD..." />
 
       <button type="submit">등록</button>
     </form>
