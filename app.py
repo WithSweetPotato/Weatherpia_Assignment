@@ -7,7 +7,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 app = Flask(__name__)
 
 ############################################
-# 1) Swagger UI 설정 (선택 사항)
+# 1) Swagger UI 설정
 ############################################
 SWAGGER_URL = '/apidocs'
 API_URL = '/static/swagger.json'  # swagger.json 문서가 /static 에 있다고 가정
@@ -18,8 +18,9 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 )
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
+
 ############################################
-# 2) DB 연결 함수
+# 2) DB 연결
 ############################################
 def get_db_connection():
     return pymysql.connect(
@@ -136,7 +137,7 @@ def get_members():
         elif order == 'desc':
             order_clause = f"{grade_case_desc} ASC"
 
-    # 4) 전체 회원 수 구하기 (페이지네이션 계산용)
+    # 4) 전체 회원 수 구하기 (페이지네이션 계산)
     conn = get_db_connection()
     try:
         with conn.cursor() as cursor:
@@ -215,8 +216,7 @@ def delete_member(member_no):
 
 
 ############################################
-# 4) REST API (JSON 응답)
-#    - 필요 없다면 생략 가능
+# 4) REST API (JSON)
 ############################################
 
 @app.route('/api/members', methods=['GET'])
