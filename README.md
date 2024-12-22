@@ -29,7 +29,7 @@
 4. **static/swagger.json (Optional)**  
    - Swagger UI에서 불러올 API 문서
 5. **README.md**  
-   - 프로젝트 소개(본 파일)
+   - 프로젝트 소개
 
 ---
 
