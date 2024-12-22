@@ -10,7 +10,7 @@ app = Flask(__name__)
 # 1) Swagger UI 설정
 ############################################
 SWAGGER_URL = '/apidocs'
-API_URL = '/static/swagger.json'  # swagger.json 문서가 /static 에 있다고 가정
+API_URL = '/static/swagger.json'  # swagger.json -> /static 에 존재 
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,
     API_URL,
@@ -20,7 +20,7 @@ app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 
 ############################################
-# 2) DB 연결
+# 2) DB 연결 (암호화가 필요하나, 간소화하여 진행하였습니다.)
 ############################################
 def get_db_connection():
     return pymysql.connect(
@@ -101,8 +101,6 @@ def get_members():
     offset = (page - 1) * limit
 
     # 2) 정렬용 CASE WHEN 구문
-    #    (DIA > PLATINUM > GOLD > SILVER > BRONZE)가 "높은 순",
-    #    반대가 "낮은 순"
     grade_case_asc = """
         CASE grade
           WHEN 'BRONZE' THEN 1
