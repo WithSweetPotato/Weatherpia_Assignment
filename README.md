@@ -1,4 +1,4 @@
-# Weatherpia Assignment - 회원 관리 서비스 (Flask + MariaDB)
+# Weatherpia Assignment - 회원 관리 서비스 (REST API)
 
 ## 프로젝트 개요
 - Flask(파이썬)와 MariaDB로 만든 간단한 회원 관리 시스템
