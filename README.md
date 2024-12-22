@@ -1,7 +1,5 @@
 # Weatherpia Assignment - 회원 관리 서비스 (Flask + MariaDB)
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](#license)
-
 > **한국어(KR) / English(EN)**
 
 ## 프로젝트 개요 (KR)
